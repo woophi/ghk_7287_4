@@ -30,14 +30,14 @@ export const App = () => {
 
   useEffect(() => {
     if (stocks?.question) {
-      window.gtag('event', '7287_question_impression', { var: 'var3', question: stocks.id });
+      window.gtag('event', '7287_question_impression', { var: 'var4', question: stocks.id });
     }
   }, [stocks]);
 
   const showAnswerStats = pressedOption !== null;
 
   const getAnswerButtonClassName = (option: PredictionOption) => {
-    const classNames = [appSt.answerButton, option === 'yes' ? appSt.answerButtonYes : appSt.answerButtonNo];
+    const classNames = [appSt.answerButton, option !== pressedOption ? appSt.answerButtonYes : appSt.answerButtonNo];
 
     if (!showAnswerStats) {
       return classNames.join(' ');
@@ -54,15 +54,15 @@ export const App = () => {
     return classNames.join(' ');
   };
 
-  const getPercentByOption = (option: PredictionOption) => (option === 'yes' ? '73%' : '27%');
-  const getPercentImageByOption = (option: PredictionOption) => (option === 'yes' ? percent73Img : percent27Img);
+  const getPercentByOption = (option: PredictionOption) => (option !== pressedOption ? '72%' : '28%');
+  const getPercentImageByOption = (option: PredictionOption) => (option !== pressedOption ? percent73Img : percent27Img);
 
   const handleAnswerClick = (option: PredictionOption) => {
     if (pressedOption) {
       return;
     }
 
-    window.gtag('event', '7287_answer_click', { var: 'var3', answer: option, question: stocks?.id ?? '' });
+    window.gtag('event', '7287_answer_click', { var: 'var4', answer: option, question: stocks?.id ?? '' });
     setPressedOption(option);
   };
 
@@ -88,7 +88,7 @@ export const App = () => {
             <PureCell
               onClick={() => {
                 window.gtag('event', '7287_choose_security', {
-                  var: 'var3',
+                  var: 'var4',
                   security_ticker: stock.ticker,
                   answer: 'no',
                   question: stocks?.id ?? '',
@@ -145,7 +145,7 @@ export const App = () => {
             <PureCell
               onClick={() => {
                 window.gtag('event', '7287_choose_security', {
-                  var: 'var3',
+                  var: 'var4',
                   security_ticker: stock.ticker,
                   answer: 'yes',
                   question: stocks?.id ?? '',
@@ -240,14 +240,14 @@ export const App = () => {
             view="primary"
             onClick={() => {
               window.gtag('event', '7287_selection_open', {
-                var: 'var3',
+                var: 'var4',
                 question: stocks?.id ?? '',
                 answer: pressedOption ?? '',
               });
               setSelectedOption(pressedOption);
             }}
           >
-            Посмотреть подброку
+            Посмотреть подборку
           </Button>
         </div>
       )}
